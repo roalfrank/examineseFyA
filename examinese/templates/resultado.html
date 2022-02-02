@@ -1,0 +1,59 @@
+{% extends 'base.html'%}
+{% load static%}
+{%block css%}
+<link rel="stylesheet" href="{% static 'css/principal.css' %}">
+<link rel="stylesheet" href="{% static 'css/resultado.css' %}">
+{%endblock%}
+{%block title-app-extra%}
+<div class="btn-atras"><a href="{% url 'examinese:libro' id_tipo%}"><img src="{% static 'img/atras.png' %}" class='img-atras' width="20" height="20" alt="" srcset=""></a></div>
+<div class="nombre-tipo">{{tipo}}</div>
+{%endblock%}
+{%block js%}
+<script src="{% static 'js/jquery.js'%}"></script>
+<script>
+
+</script>
+{%endblock%}
+{% block header%}{% endblock%}
+{%block container%}
+    <section class='contenedor-resultado'>
+        <div class="letrero">
+            <h1>RESULTADO</h1>
+            <div class="info">
+                <span class='info-label'>Preguntas:</span>
+                <span class='info-data'>{{cantidad_preguntas}}</span>
+            </div>
+            <div class="info">
+                <span class='info-correcta'>Correctas:</span>
+                <span class='info-data'>{{cantidad_respuestas_ok}}</span>
+            </div>
+            <div class="info">
+                <span class='info-incorrectas'>Incorrectas:</span>
+                <span class='info-data'>{{cantidad_respuestas_no}}</span>
+            </div>
+            <span class='info-estado {% if aprobado %}bg-verde{%else%}bg-red{% endif %}'>
+                {% if aprobado %}
+                Aprobado
+                {%else%}
+                No logrado
+                {% endif %}
+            </span>
+        </div>
+        <div class="contenedor-preguntas">
+            {% for respuesta in respuestas %}
+            <div class="card card-resultado">
+                <span class="contador">{{forloop.counter}}</span>
+                <div class="card-header {% if not respuesta.opcion.correcta %}bg-red{% endif %}">
+                <p>{{respuesta.pregunta.titulo}}</p>
+                </div>
+                <div class="card-body card-body-resultado">
+                    <div class="respuesta">
+                        <p>{{respuesta.opcion.titulo}}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor%}
+        </div>
+        
+    </section>
+{%endblock%}

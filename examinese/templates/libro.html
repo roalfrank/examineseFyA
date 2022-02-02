@@ -1,0 +1,48 @@
+{% extends 'base.html'%}
+{% load static%}
+{%block css%}<link rel="stylesheet" href="{% static 'css/libro.css' %}">{%endblock%}
+{%block cantidad_realizados%}{{cantidadCompletado}}{%endblock%}
+{%block container%}
+    <section class='capitulos'>
+        {% for cuestionario in cuestionarios %}
+        <div class="card">
+                <div class="card-header {% if cuestionario.aleatorio %}bg-especial{%else%}{% if forloop.counter|divisibleby:2%}bg-orange{%endif%}{%endif%}">
+                    <div class="card-title">
+                        <h3>{{cuestionario.titulo}}</h3>
+                    </div>
+                <p>{{cuestionario.descripcion}}</p>
+                </div>
+                <div class="card-body">
+                    <div href="#" class='objetivo'>
+                        <a class="info-principal" href="#">
+                            <div class="label-info">2</div>
+                            <div class="data-info"><img src="{% static 'img/completado.png' %}"  width="20" height="20" alt="" srcset=""></div>
+                        </a>
+                        <span class='mensaje'>Completados</span>
+                        <a class="info-principal" href="#">
+                            <div class="label-info">53</div>
+                            <div class="data-info"><img src="{% static 'img/no_logrado.png' %}"  width="20" height="20" alt="" srcset=""></div>
+                        </a>
+                        <span class='mensaje'>Desaprobados</span>
+                        <a class="info-principal" href="#">
+                            <div class="label-info">73</div>
+                            <div class="data-info"><img src="{% static 'img/incompleto.png' %}"  width="20" height="20" alt="" srcset=""></div>
+                        </a>
+                        <span class='mensaje'>Incompletos</span>
+                        <!-- <img src="{% static 'img/objetivo.png'%}" alt="Lecciones de este capitulo1" width="40" height="40"> -->
+                    </div>
+                    <!-- <a href="#"><h3>Lecciones</h3></a> -->
+                    <div class="img">
+                        <img src="{% static 'img/nuevoTestamento.png'%}" alt="Nuevo testamento" width="100" height="100">
+                    </div>
+                    <a class='btn btn-empezar' href='{% url "examinese:crear_examen" cuestionario.pk %} '>Examinar</a>
+                    <div class='cant-preguntas'>
+                        <span class="cant-preguntas-numero">{{cuestionario.preguntas.all|length}}</span>
+                        <span class="cant-preguntas-text {% if forloop.counter|divisibleby:2%}bg-azul{%endif%}">Preguntas</span>
+                        <img src="{% static 'img/pregunta.png' %}" alt="Simbolo de interrogación" width="30" height="30">
+                    </div>
+                </div>
+        </div>
+        {% endfor%}
+    </section>
+{%endblock%}

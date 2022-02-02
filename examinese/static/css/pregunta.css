@@ -1,0 +1,208 @@
+.contenedor-pregunta{
+    margin-top: 1rem;
+    max-width: 40rem;
+}
+body {
+    padding-top: 5vh;
+}
+.nombre-tipo{
+    position: absolute;
+    top: -1.5rem;
+    left: 2rem;
+    color: #fff;
+}
+.img-atras{
+    background-color: #fff;
+    border-radius: 50%;
+    transition: transform 0.3s;
+}
+.img-atras:hover{
+    box-shadow: 0 2px 5px #fff;
+    transform: translateY(-0.5rem);
+}
+.contenedor-pregunta h3{
+    font-size: 2rem;
+    color:#fff;
+    /* background-color: #fd8801; */
+    /* background-color: #5B86E5; */
+    background-color: #5b87e549;
+    padding: 0.5rem;
+    box-shadow: 0 0 10px #fffffe;
+    border-radius: 5px;
+    text-align: center;
+    position: relative;
+}
+.contenedor-pregunta h3>img{
+    position: absolute;
+    top:-1rem;
+    right: -0.5rem;
+}
+.btn-atras{
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.form{
+    margin-top: 2rem;
+    max-width: 80vw;
+}
+.container-radio {
+    display: block;
+    position: relative;
+    padding-left: 3rem;
+    margin-bottom: 12px;
+    cursor: pointer;
+    color: var(--text-color);
+    font-size: 30px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    text-align: justify;
+    transition: transform 0.3s;
+}
+/* Hide the browser's default radio button */
+.container-radio input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* Create a custom radio button */
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+    rotate: -45deg;
+    transition: background-color 0.3s,
+    box-shadow 0.3s;
+    /* border-radius: 50%; */
+}
+.fondo{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 5px;
+    transition: background-color 0.5s;
+    z-index: -1;
+}
+.container-radio:hover {
+    background-color: #fd8701bc;
+    transform: scale(1.05);
+    border-radius: 5px;
+}
+/* On mouse-over, add a grey background color */
+.container-radio:hover input~.checkmark {
+    background-color: #ccc;
+}
+.container-radio input:checked~.fondo {
+    background-color: #fd8701;
+}
+
+/* When the radio button is checked, add a blue background */
+.container-radio input:checked~.checkmark {
+    background-color: #ffa897;
+    box-shadow: inset 2px 2px 10px #fff,
+    inset -2px -2px 10px #fff;
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+    transition: display 0.3s;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.container-radio input:checked~.checkmark:after {
+    display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.container-radio .checkmark:after {
+    top: 9px;
+    left: 9px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: white;
+}
+/*btn-responder*/
+.btn-action{
+ margin-top: 2rem;
+}
+.btn-responder{
+    padding: 0.5rem;
+    color: #fff;
+    font-size: 1.5rem;
+    width: 100%;
+}
+.btn-responder:hover{
+    transform: scale(1.05);
+    cursor: pointer;
+}
+/*contador*/
+.contador{
+    position: absolute;
+    top:-1.3rem;
+    right:0;
+    width: 50px;
+    height: 50px;
+    background-color: #fff;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fd8701;
+    font-weight: bold;
+    font-size: 1.5rem;
+    box-shadow: 2px 2px 5px;
+}
+.contador-total{
+    font-size: 1.3rem;
+}
+.contador-actual {
+    color: rgb(8, 199, 24);
+    position: relative;
+    top: -0.4rem;
+    left: -0.6rem;
+    
+}
+.contador::before{
+    content: '';
+    width: 30px;
+    height: 30px;
+    border-radius: 10px;
+    background-color: #eee;
+    position: absolute;
+    top: 0.2rem;
+    left: -0.8rem;
+    box-shadow: 2px 2px 5px;
+}
+.isDisabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+    pointer-events: none;
+}
+@media (max-width:340px) {
+    .title-app h1 {
+        font-size: 20px;
+    }
+    .title-app p {
+        font-size: 20px;
+    }
+    .contenedor-pregunta h3 {
+        text-align: start;
+        font-size: 25px;
+    }
+    .container-radio{
+        font-size: 20px;
+    }
+}
+

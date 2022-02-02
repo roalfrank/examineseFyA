@@ -1,0 +1,82 @@
+{% extends 'base.html'%}
+{% load static%}
+{%block css%}<link rel="stylesheet" href="{% static 'css/pregunta.css' %}">{%endblock%}
+{%block js%}
+<script src="{% static 'js/jquery.js'%}"></script>
+<script>
+    const btn = document.querySelector("#btn_enviar");
+    const formEnviar = document.querySelector("#formulario");
+    $('.btn-action a').prop('disabled',true);
+    $('.container-radio input').on('click',function(){
+           $('.btn-action a').removeClass('isDisabled');
+    });
+    btn.addEventListener("click", function () {
+        console.log('sdfasdfasdfsd');
+        var formData = new FormData(formEnviar);
+        let json_data = JSON.stringify(Object.fromEntries(formData))
+        console.log(json_data);
+        $.ajax({
+            url: "{% url 'examinese:procesar_espuesta'%}",
+            type: 'POST',
+            data: formData,
+            dataType: 'json',
+            processData: false,
+            contentType: false,
+        }).done(function (data) {
+            if(data.status==1){
+               console.log('Todo correcto');
+                //{% if page_obj.has_next %}
+                window.location.href = "{% url 'examinese:examen' cuestionario %}?page={{ page_obj.next_page_number }}"
+                //{% else %}
+                window.location.href ='{% url "examinese:resultado_examen" cuestionario%}'
+                //{% endif %}
+            }
+            else {
+               console.log(data.texto);
+               $(".mensaje").html('');
+               $(".mensaje").html('<p>'+data.texto+'</p>');
+               $('.btn-action').html(`
+                //{% if page_obj.has_next %}
+               <a href="?page={{ page_obj.next_page_number }}" id='btn_enviar' class='btn bg-azul btn-responder'>Siguiente</a>
+               //{% else %}
+               window.location.href ='{% url "examinese:resultado_examen" cuestionario%}'
+               //{% endif %}
+               `);
+            }
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            console.log(textStatus + ': ' + errorThrown);
+        }).always(function (data) {
+
+        });
+    });
+</script>
+{%endblock%}
+{% block header%}{% endblock%}
+{%block title-app-extra%}
+<div class="btn-atras"><a href="{% url 'examinese:libro' id_tipo%}"><img src="{% static 'img/atras.png' %}" class='img-atras' width="20" height="20" alt="" srcset=""></a></div>
+<div class="contador"><span> <span class='contador-actual'>{{ page_obj.number }}</span>/<span class='contador-total'>{{ page_obj.paginator.num_pages }}</span></span></div>
+<div class="nombre-tipo">{{tipo}}</div>
+{%endblock%}
+{%block container%}
+    <section class='contenedor-pregunta' id='vue-app'>
+        <div class="mensaje"></div>
+        {% for pregunta in page_obj %}
+        <h3><img src="{% static 'img/pregunta.png'%}" alt="" width="30px" height="30px">{{ pregunta.titulo }}</h3>
+        <form action="#" class='form' id='formulario'>
+            {% csrf_token %}
+            <input type="hidden" name="pregunta" value="{{pregunta.pk}}">
+            <input type="hidden" name="cuestionario" value="{{cuestionario}}">
+            {% for opcion in pregunta.opciones.all %}
+                <label class="container-radio">{{opcion.titulo}}
+                    <input type="radio"  name="opcion" value="{{opcion.pk}}">
+                    <div class="fondo"></div>
+                    <span class="checkmark"></span>
+                </label>
+            {% endfor %}
+        {% endfor %}
+            <div class="btn-action">
+                <a href="#" id='btn_enviar' class='btn bg-azul btn-responder isDisabled'>Responder</a>
+            </div>
+        </form>
+    </section>
+{%endblock%}

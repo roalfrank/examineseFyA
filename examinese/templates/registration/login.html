@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{%block css%}
+<style>
+.container-form p{
+    width: 50%;
+    position: relative;
+}
+.container-input{
+   width: 50%;
+   margin:0 auto;
+   position: relative;
+}
+.container-form{
+    margin: 2rem auto 0;
+    width: 100%;
+}
+.container-form form{
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+input{
+    border: none;
+    box-shadow: 3px 2px 5px var(--primary-color);
+    border-radius: 5px;
+    height: 1.5rem;
+    width: 100%;
+    transition: transform 0.3s;
+    position: relative;
+    padding: 0 0.8rem;
+}
+input:hover,input:focus{
+    transform: scale(1.05);
+    border: none;
+}
+label{
+    color: #fff;
+    position: absolute;
+    top: -1.3rem;
+}
+/*form_errors*/
+#form_errors{
+    background-color: #fff;
+    width: 100%;
+    height: auto;
+    margin-bottom: 1rem;
+    padding: 1rem 2rem;
+    border-radius: 5px;
+    color: red;
+}
+form button{
+  border: none;
+  width: 50%;
+  padding: 0.5rem 0;
+  border-radius: 2px;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+form button:hover{
+  box-shadow: 0 5px 3px rgba(0,0,0,0.25);
+  transform: translateY(-0.5rem);
+}
+</style>
+{%endblock%}
+{% block header%}{% endblock%}
+{% block title%} <h1>PANORAMA DEL NUEVO TESTAMENTO</h1>{% endblock%}
+{% block sub_title%}Iniciar sección{%endblock%}
+{% block container%}
+    <section class="container-form">
+        {% if form.errors %}
+            <div id="form_errors">
+                {% for key, value in form.errors.items %}
+                    <strong>{{ value }}</strong>
+                {% endfor %}
+            </div>
+        {% endif %}
+        <form method="post">
+        {% csrf_token %}
+        <p>
+            <div class='container-input'>
+                <label for="id_username">Usuario</label>
+                {{ form.username }}
+            </div>
+        </p>
+        <p> 
+            <div class="container-input">
+                <label for="id_password">Contraseña</label>
+                {{ form.password }}
+            </div>
+        </p>
+        <button type="submit">Entrar</button>
+        </form>
+    </section>
+{% endblock%}

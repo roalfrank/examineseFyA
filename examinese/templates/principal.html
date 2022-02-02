@@ -1,0 +1,28 @@
+{% extends 'base.html'%}
+{% load static%}
+{%block css%}<link rel="stylesheet" href="{% static 'css/principal.css' %}">{%endblock%}
+{%block container%}
+    <section class='capitulos'>
+        {% for tipo in tipos %}
+        <div class="card">
+                <div class="card-header {% if forloop.counter|divisibleby:2%}bg-orange{%endif%}">
+                    <div class="card-title">
+                        <h3>{{tipo.nombre}}</h3>
+                    </div>
+                <p>{{tipo.descripcion}}</p>
+                </div>
+                <div class="card-body">
+                    <div class="img">
+                        <img src="{% static 'img/nuevoTestamento.png'%}" alt="Nuevo testamento" width="100" height="100">
+                    </div>
+                    <a class='btn btn-empezar' href='{% url "examinese:libro" tipo.pk %} '>Abrir</a>
+                    <div class='cant-preguntas cant-preguntas-principal'>
+                        <span class="cant-preguntas-numero">{{tipo.cuestionario_set.all|length}}</span>
+                        <span class="cant-preguntas-text {% if forloop.counter|divisibleby:2%}bg-azul{%endif%}">Cuestionarios</span>
+                        <img src="{% static 'img/pregunta.png' %}" alt="Simbolo de interrogación" width="30" height="30">
+                    </div>
+                </div>
+        </div>
+        {% endfor%}
+    </section>
+{%endblock%}

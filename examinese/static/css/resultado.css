@@ -1,0 +1,91 @@
+.contenedor-resultado{
+    margin-top: 3rem;
+}
+.card-resultado{
+    width: 90%;
+    height: auto;
+    flex-direction: column;
+    border-radius: 10px;
+    position: relative;
+}
+.btn-atras{
+    position: absolute;
+    top: 0;
+    left: 1rem;
+}
+body{
+    padding-top: 5vh;
+}
+.nombre-tipo {
+    position: absolute;
+    top: 0;
+    left: 2.5rem;
+    color: #fff;
+}
+.img-atras {
+    background-color: #fff;
+    border-radius: 50%;
+    transition: transform 0.3s;
+}
+
+.img-atras:hover {
+    box-shadow: 0 2px 5px #fff;
+    transform: translateY(-0.5rem);
+}
+.contador{
+    position: absolute;
+    top: 0;
+    left: -1.3rem;
+    width: 50px;
+    height: 1rem;
+    background-color: #fff;
+    text-align: start;
+    padding-left: 0.3rem;
+    border-radius: 5px 0 0 5px;
+}
+.card-body-resultado{
+text-align: center;
+font-size: 1.5rem;
+height: auto;
+}
+.card-header{
+    height: auto;
+    border-radius: 10px 10px 0 0;
+    padding: 0 0.5rem;
+}
+.letrero{
+ width: 100%;
+ height: auto;
+ margin-bottom: 1rem;
+ position: relative;
+ box-shadow: 0 2px 5px #fff;
+ padding: 0.8rem 1.5rem;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ flex-wrap: wrap;
+ gap: 1rem;
+ color: #fff;
+}
+.letrero h1{
+    position: absolute;
+    top: -1.7rem;
+    left: 0;
+    box-shadow: 0 2px 5px #fff;
+    padding: 0 0.5rem;
+    color: #fff;
+}
+.info-estado{
+    position: absolute;
+    top: -1.2rem;
+    right: 0;
+    box-shadow: 0 2px 5px #fff;
+    padding: 0 0.5rem;
+    color: #fff;
+}
+.info-incorrectas{
+    color: red;
+}
+.info-correcta {
+    color: green;
+}
