@@ -149,6 +149,7 @@ header label {
 .title-app h1{
     color: var(--text-color);
     font-size: 30px;
+    margin-bottom: 0.5rem;
 }
 .title-app p{
     color: var(--text-color);

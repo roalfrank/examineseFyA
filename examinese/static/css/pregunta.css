@@ -136,6 +136,7 @@ body {
 /*btn-responder*/
 .btn-action{
  margin-top: 2rem;
+ margin-bottom: 2rem;
 }
 .btn-responder{
     padding: 0.5rem;
