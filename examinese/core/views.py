@@ -36,33 +36,35 @@ def crear_examen(request,id_cuestionario):
 
 @login_required()
 def presentarPregunta(request,pk):
-    global LISTA_ALEATORIA
-    context={}
-    cuestionario_usuario = get_object_or_404(Cuestionario_Usuario,pk=pk)
-    if len(LISTA_ALEATORIA)>0:
-        preguntas=LISTA_ALEATORIA
-    else:
-        if cuestionario_usuario.cuestionario.aleatorio:
-            LISTA_ALEATORIA = Preguntas.objects.filter(cuestionario__tipo=cuestionario_usuario.cuestionario.tipo).values_list('pk',flat=True)
-            preguntas=LISTA_ALEATORIA
-            LISTA_ALEATORIA = Preguntas.objects.filter(cuestionario__tipo=cuestionario_usuario.cuestionario.tipo).values_list('id', flat=True)
-            random_preguntas= random.sample(list(LISTA_ALEATORIA), min(len(LISTA_ALEATORIA), 5))
-            LISTA_ALEATORIA = Preguntas.objects.filter(pk__in=random_preguntas)
+    try:
+        global LISTA_ALEATORIA
+        context={}
+        cuestionario_usuario = get_object_or_404(Cuestionario_Usuario,pk=pk)
+        if len(LISTA_ALEATORIA)>0:
             preguntas=LISTA_ALEATORIA
         else:
-            preguntas = cuestionario_usuario.cuestionario.preguntas.all()
-    paginator = Paginator(preguntas, 1) 
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-    if page_obj.number == page_obj.paginator.num_pages:
+            if cuestionario_usuario.cuestionario.aleatorio:
+                LISTA_ALEATORIA = Preguntas.objects.filter(cuestionario__tipo=cuestionario_usuario.cuestionario.tipo).values_list('pk',flat=True)
+                random_preguntas= random.sample(list(LISTA_ALEATORIA), min(len(LISTA_ALEATORIA), 10))
+                LISTA_ALEATORIA = Preguntas.objects.filter(pk__in=random_preguntas)
+                preguntas=LISTA_ALEATORIA
+            else:
+                preguntas = cuestionario_usuario.cuestionario.preguntas.all()
+        paginator = Paginator(preguntas, 1) 
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+        if page_obj.number == page_obj.paginator.num_pages:
+            LISTA_ALEATORIA=[]
+        context['title']=cuestionario_usuario.cuestionario.titulo
+        context['sub_title']=cuestionario_usuario.cuestionario.descripcion
+        context['tipo']=cuestionario_usuario.cuestionario.tipo
+        context['id_tipo']=cuestionario_usuario.cuestionario.tipo.pk
+        context['page_obj']=page_obj
+        context['cuestionario']=cuestionario_usuario.pk
+        return render(request, 'vista_examen.html',context )
+    except:
         LISTA_ALEATORIA=[]
-    context['title']=cuestionario_usuario.cuestionario.titulo
-    context['sub_title']=cuestionario_usuario.cuestionario.descripcion
-    context['tipo']=cuestionario_usuario.cuestionario.tipo
-    context['id_tipo']=cuestionario_usuario.cuestionario.tipo.pk
-    context['page_obj']=page_obj
-    context['cuestionario']=cuestionario_usuario.pk
-    return render(request, 'vista_examen.html',context )
+
 
 
 @login_required()
@@ -94,7 +96,6 @@ def resultadoCuestionario(request,pk):
 def procesarRespuesta(request):
     if request.method == 'POST':
        data={}
-       print(request.POST)
        id_pregunta = int(request.POST['pregunta'])
        id_cuestionario = int(request.POST['cuestionario'])
        id_opcion = int(request.POST['opcion'])
@@ -102,7 +103,6 @@ def procesarRespuesta(request):
            cuestionario__id=id_cuestionario,
            pregunta__id=id_pregunta
        )
-       print('Lista chequear :',chequear_esta)
        if len(chequear_esta)>=1:
            data['status']=0
            data['texto']='Ya el usuario a respondido esta pregunta'
