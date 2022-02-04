@@ -3,7 +3,6 @@
 {%block css%}<link rel="stylesheet" href="{% static 'css/principal.css' %}">{%endblock%}
 {%block container%}
     <section class='capitulos'>
-        roal
         {% for tipo in tipos %}
         <div class="card">
                 <div class="card-header {% if forloop.counter|divisibleby:2%}bg-orange{%endif%}">
